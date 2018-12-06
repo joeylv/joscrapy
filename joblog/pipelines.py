@@ -83,8 +83,8 @@ class JoblogPipeline(object):
 
         try:
             self.cur.execute(sql)
-        except:
-            print("WWWWWWWWW")
+        except Exception as e:
+            print("WWWWWWWWW" + e)
 
         self.con.commit()
 

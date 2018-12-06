@@ -17,16 +17,19 @@ class CnblogSpider(scrapy.Spider):
     # https://www.cnblogs.com/leesf456/p/5628300.html  操作系统目录
     start_urls = [
         # https://www.cnblogs.com/leesf456/default.html?page=8
-        "https://www.cnblogs.com/chenssy/category/525010.html",
-        "https://www.cnblogs.com/chenssy/category/482229.html",
+        "https://www.cnblogs.com/chenssy/category/525010.html",  # Java 提高
+        "https://www.cnblogs.com/chenssy/category/482229.html",  # 设计模式
     ]
     count = 0
 
     def start_requests(self):
         print(self.name)
         # print("start_requests")
-        for url in self.start_urls:
-            yield Request(url=url, callback=self.parse)  # 去爬博客
+        # for url in self.start_urls:
+        #     yield Request(url=url, callback=self.parse)  # 去爬博客
+        for i in range(1, 16):
+            url = "https://www.cnblogs.com/chenssy/default.html?page={}".format(i)
+            yield Request(url=url, callback=self.parse_pape)  # 去爬博客
         for i in range(1, 9):
             url = "https://www.cnblogs.com/leesf456/default.html?page={}".format(i)
             yield Request(url=url, callback=self.parse_pape)  # 去爬博客
@@ -47,7 +50,7 @@ class CnblogSpider(scrapy.Spider):
 
     def topic(self, response):
         url = str(response.url)
-        print(url[url.rindex('/') + 1:url.rindex('.')])
+        # print(url[url.rindex('/') + 1:url.rindex('.')])
         if response.status == 200:
             self.count += 1
         print(self.count)
