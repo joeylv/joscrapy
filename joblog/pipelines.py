@@ -7,7 +7,6 @@
 
 
 import sqlite3
-
 from scrapy import Request
 from scrapy.exceptions import DropItem
 from scrapy.pipelines.images import ImagesPipeline
@@ -42,19 +41,22 @@ class JoblogPipeline(object):
     def process_item(self, item, spider):
         # print(item)
         # print(self.select_ex(item))
+        # print(self.select_ex(item) is None)
         if self.select_ex(item) is None:
             self.insert_into(item)
+            # print('Not exist::::::::::::' + item['title'])
         else:
-            print('exist::::::::::::' + item['url'])
+            print('exist::::::::::::' + item['title'])
 
         # print('process_item {} {}'.format(item['image_urls'], item.get('image_paths', '')))
         return item
 
     def select_ex(self, item):
         if isinstance(item, TitleItem):
-            sql = "SELECT * from title where url = '%s'" % (item.get('url', ''))
+            sql = "SELECT * from title where url = '%s' or title ='%s'" % (item.get('url', ''), item.get('title', ''))
         else:
-            sql = "SELECT * from topic where url = '%s'" % (item.get('url', ''))
+            sql = "SELECT * from topic where url = '%s' or title ='%s'" % (
+                item.get('url', ''), item.get('title', '').replace('—–', '-----'))
 
         self.cur.execute(sql)
         return self.cur.fetchone()

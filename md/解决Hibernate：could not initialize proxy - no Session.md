@@ -1,7 +1,0 @@
-##解决Hibernate：could not initialize proxy - no Session 这个从字面上就可以看出：不能初始化，没有session。也就说主要原因是因为session关闭了。  在Hibernate中，<many-to-one.../>中的lazy默认为proxy。这样hibernate在数据库中查询数据时事不会把关联的对象查出来的，而是保存一个获得该值得方法：getXxxx()。当我们需要使用这个值的时候,也就是使用getXxx()方法来调用的时候，Hibernate就会利用这个方法从数据库中获取相应的数据。但是很不幸，我们的session早就关闭了。这是因为Hibernate的懒加载策略，在Hibernate中是使用sessionFactory来管理session，我们每进行一次数据库操作时都会新建一个session对象，当我们操作完成后，hibernate就会在dao层立即关闭该session。这样做就可以严格控制session，避免出现低级错误。对于这种错误，一般都会有三个方法可以解决。1、把lazy设成false。这个是最简单的办法，个人认为也是比较笨的方法。因为这是在用效率作为代价。2、使用OpenSessionInViewFilter。这种方法是将session交给servlet filter来管理，每当一个请求来之后就会开启一个session，只有当响应结束后才会关闭。如下：	1         <filter-name>hibernateFilter</filter-name> 2              <filter-class>  org.springframework.orm.hibernate3.support.OpenSessionInViewFilter </filter-class> 3         </filter 4         <filter-mapping> 5              <filter-name>hibernateFilter</filter-name> 6              <url-pattern>/*</url-pattern> 7         </filter-mapping> 
-
-##
-##上面的配置文件时在web.xml中配置的。3、将hibernate的抓起策略改为join。也就是是left join fetch或inner join fetch语法。就是在<many-to-one../>中配置lazy="false" fetch="join"即可。如：	1     <many-to-one name="worker" lazy="false" fetch="join" class="com.paixie.domain.Worker">2 3              <column name="positionId"></column>4 5         </many-to-one>
-
-##
-##
