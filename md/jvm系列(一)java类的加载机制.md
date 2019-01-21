@@ -11,11 +11,16 @@ java类的加载机制
 
     
     
-    加载.class文件的方式
-    – 从本地系统中直接加载
-    – 通过网络下载.class文件
-    – 从zip，jar等归档文件中加载.class文件
-    – 从专有数据库中提取.class文件
+    加载.class文件的方式
+
+    – 从本地系统中直接加载
+
+    – 通过网络下载.class文件
+
+    – 从zip，jar等归档文件中加载.class文件
+
+    – 从专有数据库中提取.class文件
+
     – 将Java源文件动态编译为.class文件
 
 2、 **类的生命周期**
@@ -72,10 +77,14 @@ Xverifynone参数来关闭大部分的类验证措施，以缩短虚拟机类加
 
     
     
-    · 这里还需要注意如下几点：
-    · 对基本数据类型来说，对于类变量（static）和全局变量，如果不显式地对其赋值而直接使用，则系统会为其赋予默认的零值，而对于局部变量来说，在使用前必须显式地为其赋值，否则编译时不通过。
-    · 对于同时被static和final修饰的常量，必须在声明的时候就为其显式地赋值，否则编译时不通过；而只被final修饰的常量则既可以在声明时显式地为其赋值，也可以在类初始化时显式地为其赋值，总之，在使用前必须为其显式地赋值，系统不会为其赋予默认零值。
-    · 对于引用数据类型reference来说，如数组引用、对象引用等，如果没有对其进行显式地赋值而直接使用，系统都会为其赋予默认的零值，即null。
+    · 这里还需要注意如下几点：
+
+    · 对基本数据类型来说，对于类变量（static）和全局变量，如果不显式地对其赋值而直接使用，则系统会为其赋予默认的零值，而对于局部变量来说，在使用前必须显式地为其赋值，否则编译时不通过。
+
+    · 对于同时被static和final修饰的常量，必须在声明的时候就为其显式地赋值，否则编译时不通过；而只被final修饰的常量则既可以在声明时显式地为其赋值，也可以在类初始化时显式地为其赋值，总之，在使用前必须为其显式地赋值，系统不会为其赋予默认零值。
+
+    · 对于引用数据类型reference来说，如数组引用、对象引用等，如果没有对其进行显式地赋值而直接使用，系统都会为其赋予默认的零值，即null。
+
     · 如果在数组初始化时没有对数组中的各元素赋值，那么其中的元素将根据对应的数据类型而被赋予默认的零值。
 
 3、如果类字段的字段属性表中存在ConstantValue属性，即同时被final和static修饰，那么在准备阶段变量value就会被初始化为ConstValue属性所指定的值。
@@ -140,22 +149,32 @@ JVM初始化步骤
 
     
     
-    package com.neo.classloader;
-    public class ClassLoaderTest {
-         public static void main(String[] args) {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            System.out.println(loader);
-            System.out.println(loader.getParent());
-            System.out.println(loader.getParent().getParent());
-        }
+    package com.neo.classloader;
+
+    public class ClassLoaderTest {
+
+         public static void main(String[] args) {
+
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+            System.out.println(loader);
+
+            System.out.println(loader.getParent());
+
+            System.out.println(loader.getParent().getParent());
+
+        }
+
     }
 
 运行后，输出结果：
 
     
     
-    [sun.misc.Launcher$AppClassLoader@64fef26a
-    sun.misc.Launcher$ExtClassLoader@1ddd40f3
+    [sun.misc.Launcher$AppClassLoader@64fef26a
+
+    sun.misc.Launcher$ExtClassLoader@1ddd40f3
+
     ](mailto:sun.misc.Launcher%24AppClassLoader@64fef26asun.misc.Launcher%24ExtClassLoader@1ddd40f3null)null
 
 从上面的结果可以看出，并没有获取到ExtClassLoader的父Loader，原因是Bootstrap
@@ -215,28 +234,44 @@ class文件，因此如果编写了自己的ClassLoader，便可以做到如下�
 
     
     
-    package com.neo.classloader;
-    public class loaderTest { 
-            public static void main(String[] args) throws ClassNotFoundException { 
-                    ClassLoader loader = HelloWorld.class.getClassLoader(); 
-                    System.out.println(loader); 
-                    //使用ClassLoader.loadClass()来加载类，不会执行初始化块 
-                    loader.loadClass("Test2"); 
-                    //使用Class.forName()来加载类，默认会执行初始化块 
-    //                Class.forName("Test2"); 
-                    //使用Class.forName()来加载类，并指定ClassLoader，初始化时不执行静态块 
-    //                Class.forName("Test2", false, loader); 
-            } 
+    package com.neo.classloader;
+
+    public class loaderTest { 
+
+            public static void main(String[] args) throws ClassNotFoundException { 
+
+                    ClassLoader loader = HelloWorld.class.getClassLoader(); 
+
+                    System.out.println(loader); 
+
+                    //使用ClassLoader.loadClass()来加载类，不会执行初始化块 
+
+                    loader.loadClass("Test2"); 
+
+                    //使用Class.forName()来加载类，默认会执行初始化块 
+
+    //                Class.forName("Test2"); 
+
+                    //使用Class.forName()来加载类，并指定ClassLoader，初始化时不执行静态块 
+
+    //                Class.forName("Test2", false, loader); 
+
+            } 
+
     }
 
 demo类
 
     
     
-    public class Test2 { 
-            static { 
-                    System.out.println("静态初始化块执行了！"); 
-            } 
+    public class Test2 { 
+
+            static { 
+
+                    System.out.println("静态初始化块执行了！"); 
+
+            } 
+
     }
 
 分别切换加载方式，会有不同的输出结果。
@@ -270,32 +305,58 @@ loader)带参函数也可控制是否加载static块。并且只有调用了newI
 
     
     
-     public Class<?> loadClass(String name)throws ClassNotFoundException {
-                return loadClass(name, false);
-        }
-        
-        protected synchronized Class<?> loadClass(String name, boolean resolve)throws ClassNotFoundException {
-                // 首先判断该类型是否已经被加载
-                Class c = findLoadedClass(name);
-                if (c == null) {
-                    //如果没有被加载，就委托给父类加载或者委派给启动类加载器加载
-                    try {
-                        if (parent != null) {
-                             //如果存在父类加载器，就委派给父类加载器加载
-                            c = parent.loadClass(name, false);
-                        } else {
-                        //如果不存在父类加载器，就检查是否是由启动类加载器加载的类，通过调用本地方法native Class findBootstrapClass(String name)
-                            c = findBootstrapClass0(name);
-                        }
-                    } catch (ClassNotFoundException e) {
-                     // 如果父类加载器和启动类加载器都不能完成加载任务，才调用自身的加载功能
-                        c = findClass(name);
-                    }
-                }
-                if (resolve) {
-                    resolveClass(c);
-                }
-                return c;
+     public Class<?> loadClass(String name)throws ClassNotFoundException {
+
+                return loadClass(name, false);
+
+        }
+
+        
+
+        protected synchronized Class<?> loadClass(String name, boolean resolve)throws ClassNotFoundException {
+
+                // 首先判断该类型是否已经被加载
+
+                Class c = findLoadedClass(name);
+
+                if (c == null) {
+
+                    //如果没有被加载，就委托给父类加载或者委派给启动类加载器加载
+
+                    try {
+
+                        if (parent != null) {
+
+                             //如果存在父类加载器，就委派给父类加载器加载
+
+                            c = parent.loadClass(name, false);
+
+                        } else {
+
+                        //如果不存在父类加载器，就检查是否是由启动类加载器加载的类，通过调用本地方法native Class findBootstrapClass(String name)
+
+                            c = findBootstrapClass0(name);
+
+                        }
+
+                    } catch (ClassNotFoundException e) {
+
+                     // 如果父类加载器和启动类加载器都不能完成加载任务，才调用自身的加载功能
+
+                        c = findClass(name);
+
+                    }
+
+                }
+
+                if (resolve) {
+
+                    resolveClass(c);
+
+                }
+
+                return c;
+
             }
 
 **双亲委派模型意义** ：
@@ -313,69 +374,132 @@ ClassLoader 类，从上面对 loadClass 方法来分析来看，我们只需要
 
     
     
-     package com.neo.classloader;
-    
-    import java.io.*;
-    
-    
-    public class MyClassLoader extends ClassLoader {
-    
-        private String root;
-    
-        protected Class<?> findClass(String name) throws ClassNotFoundException {
-            byte[] classData = loadClassData(name);
-            if (classData == null) {
-                throw new ClassNotFoundException();
-            } else {
-                return defineClass(name, classData, 0, classData.length);
-            }
-        }
-    
-        private byte[] loadClassData(String className) {
-            String fileName = root + File.separatorChar
-                    + className.replace(".", File.separatorChar) + ".class";
-            try {
-                InputStream ins = new FileInputStream(fileName);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                int bufferSize = 1024;
-                byte[] buffer = new byte[bufferSize];
-                int length = 0;
-                while ((length = ins.read(buffer)) != -1) {
-                    baos.write(buffer, 0, length);
-                }
-                return baos.toByteArray();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    
-        public String getRoot() {
-            return root;
-        }
-    
-        public void setRoot(String root) {
-            this.root = root;
-        }
-    
-        public static void main(String[] args)  {
-    
-            MyClassLoader classLoader = new MyClassLoader();
-            classLoader.setRoot("E:\\temp");
-    
-            Class<?> testClass = null;
-            try {
-                testClass = classLoader.loadClass("com.neo.classloader.Test2");
-                Object object = testClass.newInstance();
-                System.out.println(object.getClass().getClassLoader());
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
+     package com.neo.classloader;
+
+    
+
+    import java.io.*;
+
+    
+
+    
+
+    public class MyClassLoader extends ClassLoader {
+
+    
+
+        private String root;
+
+    
+
+        protected Class<?> findClass(String name) throws ClassNotFoundException {
+
+            byte[] classData = loadClassData(name);
+
+            if (classData == null) {
+
+                throw new ClassNotFoundException();
+
+            } else {
+
+                return defineClass(name, classData, 0, classData.length);
+
+            }
+
+        }
+
+    
+
+        private byte[] loadClassData(String className) {
+
+            String fileName = root + File.separatorChar
+
+                    + className.replace(".", File.separatorChar) + ".class";
+
+            try {
+
+                InputStream ins = new FileInputStream(fileName);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                int bufferSize = 1024;
+
+                byte[] buffer = new byte[bufferSize];
+
+                int length = 0;
+
+                while ((length = ins.read(buffer)) != -1) {
+
+                    baos.write(buffer, 0, length);
+
+                }
+
+                return baos.toByteArray();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+            return null;
+
+        }
+
+    
+
+        public String getRoot() {
+
+            return root;
+
+        }
+
+    
+
+        public void setRoot(String root) {
+
+            this.root = root;
+
+        }
+
+    
+
+        public static void main(String[] args)  {
+
+    
+
+            MyClassLoader classLoader = new MyClassLoader();
+
+            classLoader.setRoot("E:\\temp");
+
+    
+
+            Class<?> testClass = null;
+
+            try {
+
+                testClass = classLoader.loadClass("com.neo.classloader.Test2");
+
+                Object object = testClass.newInstance();
+
+                System.out.println(object.getClass().getClassLoader());
+
+            } catch (ClassNotFoundException e) {
+
+                e.printStackTrace();
+
+            } catch (InstantiationException e) {
+
+                e.printStackTrace();
+
+            } catch (IllegalAccessException e) {
+
+                e.printStackTrace();
+
+            }
+
+        }
+
     }
 
 自定义类加载器的核心在于对字节码文件的获取，如果是加密的字节码则需要在该类中对文件进行解密。由于这里只是演示，我并未对class文件进行加密，因此没有解密的过程。这里有几点需要注意：
@@ -403,7 +527,4 @@ AppClassLoader 加载，而不会通过我们自定义类加载器来加载。
 [http://www.codeceo.com/article/java-class-loader-
 learn.html](http://www.codeceo.com/article/java-class-loader-learn.html)
 
-![](../md/img/ityouknow/331425-20170527112421388-1946699092.png)
-
-欢迎关注公众号纯洁的微笑，了解最新文章
 

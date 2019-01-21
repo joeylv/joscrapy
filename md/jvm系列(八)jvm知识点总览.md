@@ -93,9 +93,6 @@ Tool)、GChisto。 \- jconsole，Java Monitoring and Management
 Console是从java5开始，在JDK中自带的java监控和管理控制台，用于对JVM中内存，线程和类等的监控 \-
 jvisualvm，jdk自带全能工具，可以分析内存快照、线程快照；监控内存变化、GC变化等。 \- MAT，Memory Analyzer
 Tool，一个基于Eclipse的内存分析工具，是一个快速、功能丰富的Java heap分析工具，它可以帮助我们查找内存泄漏和减少内存消耗 \-
-GChisto，一款专业分析gc日志的工具 > *工具使用参考 [jvm系列(七):jvm调优-
-工具篇](http://www.ityouknow.com/java/2017/02/22/jvm-tool.html)* \-------------
-**作者：纯洁的微笑**
-**出处：[http://www.ityouknow.com/](http://www.ityouknow.com/java/2017/03/01/jvm-
-overview.html)** **版权归作者所有，转载请注明出处**
+GChisto，一款专业分析gc日志的工具 >
+
 

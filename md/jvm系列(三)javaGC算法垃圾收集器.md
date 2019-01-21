@@ -374,9 +374,3 @@ G1GC
 
 [
 http://my.oschina.net/hosee/blog/644618](http://my.oschina.net/hosee/blog/644618)
-
-深入理解Java虚拟机：JVM高级特性与最佳实践 pdf
-
-**下载地址**
-：[http://download.csdn.net/detail/ityouknow/9557109](http://download.csdn.net/detail/ityouknow/9557109)
-

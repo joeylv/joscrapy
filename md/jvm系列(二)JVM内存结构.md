@@ -113,7 +113,4 @@ HotSpot虚拟机）直接就把本地方法栈和虚拟机栈合二为一。与�
 model/](http://ifeve.com/under-the-hood-runtime-data-areas-javas-memory-
 model/)
 
-《深入理解Java虚拟机：JVM高级特性与最佳实践_周志明.高清扫描版.pdf》
-
-**下载地址** ：<http://download.csdn.net/detail/ityouknow/9557109>
 

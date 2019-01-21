@@ -70,9 +70,7 @@ Full GC的执行时间比Minor GC要长很多，因此，如果在Full GC上花�
 
 ## 影响GC性能的参数
 
-正如我在系列的第一篇文章[《理解Java GC》](http://www.cubrid.org/blog/understanding-java-
-garbage-
-collection)末尾提到的，不要幻想着“如果有人用他设置的GC参数获取了不错的性能，我们为什么不复制他的参数设置呢？”，因为对于不用的Web服务，它们创建的对象大小和生命周期都不相同。
+正如我在系列的第一篇文章[《理解Java GC》](http://www.cubrid.org/blog/understanding-java-garbage-collection)末尾提到的，不要幻想着“如果有人用他设置的GC参数获取了不错的性能，我们为什么不复制他的参数设置呢？”，因为对于不用的Web服务，它们创建的对象大小和生命周期都不相同。
 
 举一个简单的例子，如果一个任务的执行条件是A，B，C，D和E，另一个完全相同的任务执行条件只有A和B，那么哪一个任务执行速度更快呢？作为常识来讲，答案很明显是后者。
 
