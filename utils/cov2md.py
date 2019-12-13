@@ -1,13 +1,11 @@
-import html2text as ht
-import markdown as markdown
 import os
-import random
 import re
-import requests
 import sqlite3
 import traceback
 import urllib
-import urllib3
+
+import html2text as ht
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -120,6 +118,6 @@ if __name__ == '__main__':
             # print(text)
             # md = text.split('#')  # split post content
             # print(md)
-            # open("1.md", "w", encoding='utf8').write(text)
+            # open("java-list-link.md", "w", encoding='utf8').write(text)
             f.write(text)
         # print(itemBlog)

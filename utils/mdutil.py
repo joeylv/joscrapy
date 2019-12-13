@@ -1,10 +1,11 @@
-import html2text as ht
 import os
 import re
-import requests
 import sqlite3
 import traceback
 import urllib
+
+import html2text as ht
+import requests
 
 
 class coverMd(object):
@@ -76,15 +77,34 @@ class coverMd(object):
                         # print(text)
                         # md = text.split('#')  # split post content
                         # print(md)
-                        # open("1.md", "w", encoding='utf8').write(text)
+                        # open("java-list-link.md", "w", encoding='utf8').write(text)
                         f.write(text)
 
         except Exception:
             print("Error: {}".format(traceback.print_exc()))
 
 
+class conver2md(object):
+    def start(self, path, to_path):
+        print(path, to_path)
+        print(os.path.isdir(path))
+        if os.path.exists(path):
+            with open(path, 'r', encoding='utf8') as f:
+                print(self.text2md(f.read()))
+                pass
+
+    def text2md(self, body):
+        text_maker = ht.HTML2Text()
+        text_maker.ignore_links = False
+        text_maker.bypass_tables = True
+        text_maker.default_image_alt = 'Image_Here'
+        text = text_maker.handle(body)
+        return text
+
+
 if __name__ == '__main__':
-    coverMd().search()
+    # coverMd().search()
+    conver2md().start('../java-list-link.md', '../')
 
     # for root, dirs, files in os.walk("../md", topdown=False):
     #     for name in files:
