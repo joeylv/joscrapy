@@ -96,7 +96,7 @@ class conver2md(object):
     def text2md(self, body):
         text_maker = ht.HTML2Text()
         text_maker.ignore_links = False
-        text_maker.bypass_tables = True
+        text_maker.bypass_tables = False
         text_maker.default_image_alt = 'Image_Here'
         text = text_maker.handle(body)
         return text
@@ -104,7 +104,7 @@ class conver2md(object):
 
 if __name__ == '__main__':
     # coverMd().search()
-    conver2md().start('../java-list-link.md', '../')
+    conver2md().start('../list-link.md', '../')
 
     # for root, dirs, files in os.walk("../md", topdown=False):
     #     for name in files:
